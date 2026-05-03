@@ -1,7 +1,10 @@
 package umc.location.exception;
 
-public class LocationException extends RuntimeException {
-    public LocationException(String message) {
-        super(message);
+import umc.apiPayload.code.BaseErrorCode;
+import umc.apiPayload.exception.ProjectException;
+
+public class LocationException extends ProjectException {
+    public LocationException(BaseErrorCode errorCode) {
+        super(errorCode);
     }
 }

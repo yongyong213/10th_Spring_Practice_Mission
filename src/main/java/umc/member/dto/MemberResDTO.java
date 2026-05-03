@@ -12,4 +12,12 @@ public class MemberResDTO {
             String phoneNumber,
             Integer point
     ) {}
+
+    public class AuthResDTO {
+        @Builder
+        public record SignUpResultDTO(
+                String email,
+                String name
+        ) {}
+    }
 }

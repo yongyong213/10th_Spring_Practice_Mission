@@ -37,4 +37,26 @@ public class MissionResDTO {
             Integer missionPoint,
             Integer missionDeadline
     ) {}
+
+    @Builder
+    public record MyMissionListDTO(
+            List<MyMissionInfoDTO> myMissions,
+            Integer listSize,
+            Boolean hasNext,
+            Long nextCursor
+    ) {}
+
+    @Builder
+    public record MyMissionInfoDTO(
+            Long userMissionId,
+            String storeName,
+            String missionContent,
+            Integer missionPoint,
+            Integer missionDeadline
+    ) {}
+
+    @Builder
+    public record MissionCompleteResultDTO(
+            Long userMissionId
+    ) {}
 }

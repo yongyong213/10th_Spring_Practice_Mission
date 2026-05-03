@@ -1,7 +1,10 @@
 package umc.food.exeption;
 
-public class FoodException extends RuntimeException {
-    public FoodException(String message) {
-        super(message);
+import umc.apiPayload.code.BaseErrorCode;
+import umc.apiPayload.exception.ProjectException;
+
+public class FoodException extends ProjectException {
+    public FoodException(BaseErrorCode errorCode) {
+        super(errorCode);
     }
 }
