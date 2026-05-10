@@ -5,25 +5,38 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import umc.location.enums.LocationName;
+import umc.location.exception.LocationException;
+import umc.location.exception.code.LocationErrorCode;
+import umc.location.repository.LocationRepository;
 import umc.mission.converter.MissionConverter;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.entity.Mapping.MemberMission;
+import umc.mission.entity.Mission;
 import umc.mission.enums.MissionStatus;
 import umc.mission.exception.MissionException;
 import umc.mission.exception.code.MissionErrorCode;
 import umc.mission.repository.MemberMissionRepository;
 import umc.mission.repository.MissionRepository;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class MissionService {
     private final MissionRepository missionRepository;
+    private final LocationRepository locationRepository;
     private final MemberMissionRepository memberMissionRepository;
 
-    public MissionResDTO.MissionListDTO getHomeInfo(String regionName, Integer page) {
-        return null;
+    public MissionResDTO.MissionListDTO getHomeInfo(Long memberId, String locationName, Integer page) {
+        LocationName location = LocationName.fromLabel(locationName);
+
+        if (!locationRepository.existsByName(location)) {
+            throw new LocationException(LocationErrorCode.LOCATION_ERROR_CODE);
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<Mission> missionPage = missionRepository.findAvailableMission(memberId, location, pageRequest);
+
+        return MissionConverter.toMissionListDTOFromMission(missionPage);
     }
 
     public MissionResDTO.MissionListDTO getMyMissions(Boolean isComplete, Integer page) {

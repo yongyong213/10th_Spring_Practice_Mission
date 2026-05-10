@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.location.enums.LocationName;
+import umc.store.entity.Store;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +26,7 @@ public class Location {
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private LocationName name;
+
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    private List<Store> storeList = new ArrayList<>();
 }

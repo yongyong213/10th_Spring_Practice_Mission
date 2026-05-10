@@ -30,10 +30,11 @@ public class MemberController {
 
     @GetMapping("/v1/home")
     public ApiResponse<MissionResDTO.MissionListDTO> getHomeInfo(
+            @RequestParam(name = "memberId") Long memberId,
             @RequestParam(name = "regionName") String regionName,
             @RequestParam(name = "page", defaultValue = "0") Integer page
     ) {
-        return ApiResponse.onSuccess(MemberSuccessCode.OK, missionService.getHomeInfo(regionName, page));
+        return ApiResponse.onSuccess(MemberSuccessCode.OK, missionService.getHomeInfo(memberId, regionName, page));
     }
 
     @PostMapping("/v1/auth/signup")

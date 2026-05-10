@@ -60,9 +60,9 @@ public class MemberConverter {
                 .memberId(member.getId())
                 .email(member.getEmail())
                 .name(member.getName())
-                .gender(member.getGender().toString()) //
+                .gender(member.getGender().toString())
                 .address(member.getAddress())
-                .birth(member.getBirth().toString()) //[cite: 1]
+                .birth(member.getBirth().toString())
                 .socialType(member.getSocialType() != null ? member.getSocialType().toString() : null)
                 .createdAt(member.getCreatedAt())
                 .build();

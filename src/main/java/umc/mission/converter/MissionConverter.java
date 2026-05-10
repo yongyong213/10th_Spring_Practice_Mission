@@ -41,4 +41,27 @@ public class MissionConverter {
                 .hasNext(missionPage.hasNext())
                 .build();
     }
+
+    public static MissionResDTO.MissionListDTO toMissionListDTOFromMission(Page<Mission> missionPage) {
+        List<MissionResDTO.MissionInfoDTO> missionInfoDTOList = missionPage.getContent().stream()
+                .map(mission -> MissionResDTO.MissionInfoDTO.builder()
+                        .missionId(mission.getId())
+                        .storeName(mission.getStore().getName())
+                        .missionContent(mission.getContent())
+                        .missionPoint(mission.getPoint())
+                        .missionDeadline(mission.getDeadline())
+                        .build())
+                .collect(Collectors.toList());
+
+        return MissionResDTO.MissionListDTO.builder()
+                .content(missionInfoDTOList)
+                .pageable(MissionResDTO.PageInfoDTO.builder()
+                        .pageNumber(missionPage.getNumber())
+                        .pageSize(missionPage.getSize())
+                        .build())
+                .isFirst(missionPage.isFirst())
+                .isLast(missionPage.isLast())
+                .hasNext(missionPage.hasNext())
+                .build();
+    }
 }
