@@ -1,9 +1,11 @@
 package umc.mission.converter;
 
 import org.springframework.data.domain.Page;
+import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.entity.Mapping.MemberMission;
 import umc.mission.entity.Mission;
+import umc.store.entity.Store;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,6 +64,28 @@ public class MissionConverter {
                 .isFirst(missionPage.isFirst())
                 .isLast(missionPage.isLast())
                 .hasNext(missionPage.hasNext())
+                .build();
+    }
+
+    public static Mission toMission(
+            Store store,
+            MissionReqDTO.CreateMission dto
+    ){
+        return Mission.builder()
+                .store(store)
+                .content(dto.content())
+                .point(dto.point())
+                .deadline(dto.deadline())
+                .build();
+    }
+
+    public static MissionResDTO.GetMission toGetMission(
+            Mission mission
+    ){
+        return MissionResDTO.GetMission.builder()
+                .content(mission.getContent())
+                .point(mission.getPoint())
+                .missionId(mission.getId())
                 .build();
     }
 }

@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.apiPayload.ApiResponse;
 import umc.apiPayload.code.BaseSuccessCode;
+import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.exception.code.MissionSuccessCode;
 import umc.mission.service.MissionService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +30,22 @@ public class MissionController {
             @PathVariable(name = "userMissionId") Long userMissionId
     ) {
         return ApiResponse.onSuccess(MissionSuccessCode.COMPLETE_OK, missionService.completeMissions(userMissionId));
+    }
+
+    @PostMapping("/v1/stores/{storeId}/missions")
+    public ApiResponse<Void> createMission(
+            @PathVariable Long storeId,
+            @RequestBody MissionReqDTO.CreateMission dto
+            ){
+        BaseSuccessCode code = MissionSuccessCode.CREATED;
+        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
+    }
+
+    @GetMapping("/v1/stores/{storeId}/missions")
+    public ApiResponse<List<MissionResDTO.GetMission>> getMissions(
+            @PathVariable Long storeId
+    ){
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code, missionService.getMissions(storeId));
     }
 }
