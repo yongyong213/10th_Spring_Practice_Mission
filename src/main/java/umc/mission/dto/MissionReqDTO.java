@@ -7,4 +7,8 @@ public class MissionReqDTO {
             Integer point,
             String content
     ){}
+
+    public record MemberIdRequest(
+            Long memberId
+    ) {}
 }

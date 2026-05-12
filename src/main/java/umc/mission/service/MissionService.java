@@ -3,6 +3,7 @@ package umc.mission.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.location.enums.LocationName;
@@ -84,11 +85,28 @@ public class MissionService {
     }
 
     @Transactional
-    public List<MissionResDTO.GetMission> getMissions(Long storeId) {
-        List<Mission> missionList = missionRepository.findAllByStore_Id(storeId);
+    public MissionResDTO.Pagination<MissionResDTO.GetMission> getMissions(
+            Long storeId,
+            Integer pageSize,
+            Integer pageNumber,
+            String sort
+    ) {
 
-        return missionList.stream()
-                .map(MissionConverter::toGetMission)
-                .toList();
+        Sort sortInfo;
+        if(sort != null){
+            sortInfo = Sort.by(sort);
+        } else {
+            sortInfo = Sort.by("id").descending();
+        }
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sortInfo);
+
+        Page<Mission> missionList = missionRepository.findAllByStore_Id(storeId, pageRequest);
+
+        return MissionConverter.toPagination(
+                missionList.map(MissionConverter::toGetMission).toList(),
+                missionList.getNumber(),
+                missionList.getSize()
+        );
     }
 }

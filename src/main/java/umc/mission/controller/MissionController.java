@@ -7,6 +7,7 @@ import umc.apiPayload.code.BaseSuccessCode;
 import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.exception.code.MissionSuccessCode;
+import umc.mission.service.MemberMissionService;
 import umc.mission.service.MissionService;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class MissionController {
     private final MissionService missionService;
+    private final MemberMissionService memberMissionService;
 
     @GetMapping("/v1/users/me/missions")
     public ApiResponse<MissionResDTO.MissionListDTO> getMyMissions(
@@ -42,10 +44,26 @@ public class MissionController {
     }
 
     @GetMapping("/v1/stores/{storeId}/missions")
-    public ApiResponse<List<MissionResDTO.GetMission>> getMissions(
-            @PathVariable Long storeId
+    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.GetMission>> getMissions(
+            @PathVariable Long storeId,
+            @RequestParam Integer pageSize,
+            @RequestParam Integer pageNumber,
+            @RequestParam(required = false) String sort
     ){
         BaseSuccessCode code = MissionSuccessCode.OK;
-        return ApiResponse.onSuccess(code, missionService.getMissions(storeId));
+        return ApiResponse.onSuccess(code, missionService.getMissions(storeId, pageSize, pageNumber, sort));
+    }
+
+    @GetMapping("/v1/missions/in-progress")
+    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.MissionInfoDTO>> getInProgressMissions(
+            @RequestParam Long memberId,
+            @RequestParam Integer pageSize,
+            @RequestParam Integer pageNumber,
+            @RequestParam(required = false) String sort
+    ){
+        MissionResDTO.Pagination<MissionResDTO.MissionInfoDTO> result =
+                memberMissionService.getInProgressMissions(memberId, pageSize, pageNumber, sort);
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code, result);
     }
 }

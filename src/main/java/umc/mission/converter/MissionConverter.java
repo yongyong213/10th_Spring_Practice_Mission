@@ -88,4 +88,29 @@ public class MissionConverter {
                 .missionId(mission.getId())
                 .build();
     }
+
+    public static <T> MissionResDTO.Pagination<T> toPagination(
+            List<T> data,
+            Integer pageNumber,
+            Integer pageSize
+    ){
+        return MissionResDTO.Pagination.<T>builder()
+                .data(data)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .build();
+    }
+
+    // 멤버 미션에서 MissionInfoDto 바꾸기 객체그래프
+    public static MissionResDTO.MissionInfoDTO MemberMissionToMissionInfoDTO(MemberMission mm){
+        Mission mission = mm.getMission();
+
+        return MissionResDTO.MissionInfoDTO.builder()
+                .missionId(mission.getId())
+                .storeName(mission.getStore().getName())
+                .missionContent(mission.getContent())
+                .missionPoint(mission.getPoint())
+                .missionDeadline(mission.getDeadline())
+                .build();
+    }
 }

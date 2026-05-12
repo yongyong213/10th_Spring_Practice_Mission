@@ -11,6 +11,7 @@ import umc.member.entity.mapping.MemberTerm;
 import umc.member.enums.Gender;
 import umc.member.enums.SocialType;
 import umc.mission.entity.Mapping.MemberMission;
+import umc.review.entity.Review;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,4 +71,8 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Review> reviewList = new ArrayList<>();
 }
