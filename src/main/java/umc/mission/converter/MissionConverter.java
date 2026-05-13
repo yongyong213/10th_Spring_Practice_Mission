@@ -1,6 +1,7 @@
 package umc.mission.converter;
 
 import org.springframework.data.domain.Page;
+import umc.apiPayload.dto.BaseResDTO;
 import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.entity.Mapping.MemberMission;
@@ -89,12 +90,12 @@ public class MissionConverter {
                 .build();
     }
 
-    public static <T> MissionResDTO.Pagination<T> toPagination(
+    public static <T> BaseResDTO.Pagination<T> toPagination(
             List<T> data,
             Integer pageNumber,
             Integer pageSize
     ){
-        return MissionResDTO.Pagination.<T>builder()
+        return BaseResDTO.Pagination.<T>builder()
                 .data(data)
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import umc.apiPayload.dto.BaseResDTO;
 import umc.mission.converter.MissionConverter;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.entity.Mapping.MemberMission;
@@ -16,7 +17,7 @@ import umc.mission.repository.MemberMissionRepository;
 public class MemberMissionService {
     private final MemberMissionRepository memberMissionRepository;
 
-    public MissionResDTO.Pagination<MissionResDTO.MissionInfoDTO> getInProgressMissions(
+    public BaseResDTO.Pagination<MissionResDTO.MissionInfoDTO> getInProgressMissions(
             Long memberId,
             Integer pageSize,
             Integer pageNumber,

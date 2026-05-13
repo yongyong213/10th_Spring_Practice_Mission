@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.apiPayload.ApiResponse;
 import umc.apiPayload.code.BaseSuccessCode;
+import umc.apiPayload.dto.BaseResDTO;
 import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.exception.code.MissionSuccessCode;
@@ -44,7 +45,7 @@ public class MissionController {
     }
 
     @GetMapping("/v1/stores/{storeId}/missions")
-    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.GetMission>> getMissions(
+    public ApiResponse<BaseResDTO.Pagination<MissionResDTO.GetMission>> getMissions(
             @PathVariable Long storeId,
             @RequestParam Integer pageSize,
             @RequestParam Integer pageNumber,
@@ -55,13 +56,13 @@ public class MissionController {
     }
 
     @GetMapping("/v1/missions/in-progress")
-    public ApiResponse<MissionResDTO.Pagination<MissionResDTO.MissionInfoDTO>> getInProgressMissions(
+    public ApiResponse<BaseResDTO.Pagination<MissionResDTO.MissionInfoDTO>> getInProgressMissions(
             @RequestParam Long memberId,
             @RequestParam Integer pageSize,
             @RequestParam Integer pageNumber,
             @RequestParam(required = false) String sort
     ){
-        MissionResDTO.Pagination<MissionResDTO.MissionInfoDTO> result =
+        BaseResDTO.Pagination<MissionResDTO.MissionInfoDTO> result =
                 memberMissionService.getInProgressMissions(memberId, pageSize, pageNumber, sort);
         BaseSuccessCode code = MissionSuccessCode.OK;
         return ApiResponse.onSuccess(code, result);

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.apiPayload.dto.BaseResDTO;
 import umc.location.enums.LocationName;
 import umc.location.exception.LocationException;
 import umc.location.exception.code.LocationErrorCode;
@@ -85,7 +86,7 @@ public class MissionService {
     }
 
     @Transactional
-    public MissionResDTO.Pagination<MissionResDTO.GetMission> getMissions(
+    public BaseResDTO.Pagination<MissionResDTO.GetMission> getMissions(
             Long storeId,
             Integer pageSize,
             Integer pageNumber,
