@@ -2,16 +2,14 @@ package umc.mission.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import umc.apiPayload.ApiResponse;
-import umc.apiPayload.code.BaseSuccessCode;
-import umc.apiPayload.dto.BaseResDTO;
+import umc.global.apiPayload.ApiResponse;
+import umc.global.apiPayload.code.BaseSuccessCode;
+import umc.global.dto.BaseResDTO;
 import umc.mission.dto.MissionReqDTO;
 import umc.mission.dto.MissionResDTO;
 import umc.mission.exception.code.MissionSuccessCode;
 import umc.mission.service.MemberMissionService;
 import umc.mission.service.MissionService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

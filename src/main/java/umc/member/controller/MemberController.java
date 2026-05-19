@@ -2,11 +2,10 @@ package umc.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import umc.apiPayload.ApiResponse;
-import umc.apiPayload.code.BaseSuccessCode;
+import umc.global.apiPayload.ApiResponse;
+import umc.global.apiPayload.code.BaseSuccessCode;
 import umc.member.dto.MemberReqDTO;
 import umc.member.dto.MemberResDTO;
-import umc.member.entity.Member;
 import umc.member.exception.code.MemberSuccessCode;
 import umc.member.service.MemberService;
 import umc.mission.dto.MissionResDTO;
