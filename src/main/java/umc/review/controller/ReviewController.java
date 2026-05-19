@@ -1,5 +1,6 @@
 package umc.review.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/v1/stores/{storeId}/members/{memberId}/reviews")
+    @Operation(summary = "리뷰 작성")
     public ApiResponse<ReviewResDTO.CreateReviewDTO> createReview(
             @PathVariable(name = "storeId") Long storeId,
             @PathVariable(name = "memberId") Long memberId,
@@ -28,6 +30,7 @@ public class ReviewController {
     }
 
     @GetMapping("/v1/members/{memberId}/reviews")
+    @Operation(summary = "멤버의 리뷰 조회")
     public ApiResponse<BaseResDTO.SliceResponse<ReviewResDTO.ReviewDetailDTO>> getMyReviews(
             @PathVariable Long memberId,
             @RequestParam Integer pageSize,

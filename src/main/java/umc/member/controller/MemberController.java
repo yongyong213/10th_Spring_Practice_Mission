@@ -1,5 +1,6 @@
 package umc.member.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.global.apiPayload.ApiResponse;
@@ -20,6 +21,7 @@ public class MemberController {
     private final MissionService missionService;
 
     @PostMapping("/v1/users/me")
+    @Operation(summary = "마이페이지 조회")
     public ApiResponse<MemberResDTO.GetInfo> getInfo(
             @RequestBody MemberReqDTO.GetInfo dto
     ){
@@ -28,6 +30,7 @@ public class MemberController {
     }
 
     @GetMapping("/v1/home")
+    @Operation(summary = "지역 미션 조회")
     public ApiResponse<MissionResDTO.MissionListDTO> getHomeInfo(
             @RequestParam(name = "memberId") Long memberId,
             @RequestParam(name = "regionName") String regionName,
@@ -37,6 +40,7 @@ public class MemberController {
     }
 
     @PostMapping("/v1/auth/signup")
+    @Operation(summary = "회원가입")
     public ApiResponse<MemberResDTO.AuthResDTO.SignUpResultDTO> signUp(
             @RequestBody MemberReqDTO.SingUpDTO request
     ) {
