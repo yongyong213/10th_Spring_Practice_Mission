@@ -1,6 +1,7 @@
 package umc.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.global.apiPayload.ApiResponse;
@@ -42,7 +43,7 @@ public class MemberController {
     @PostMapping("/v1/auth/signup")
     @Operation(summary = "회원가입")
     public ApiResponse<MemberResDTO.AuthResDTO.SignUpResultDTO> signUp(
-            @RequestBody MemberReqDTO.SingUpDTO request
+            @Valid @RequestBody MemberReqDTO.SingUpDTO request
     ) {
         MemberResDTO.AuthResDTO.SignUpResultDTO result = memberService.signUp(request);
 
