@@ -3,9 +3,11 @@ package umc.member.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import umc.global.apiPayload.ApiResponse;
 import umc.global.apiPayload.code.BaseSuccessCode;
+import umc.global.security.entity.AuthMember;
 import umc.member.dto.MemberReqDTO;
 import umc.member.dto.MemberResDTO;
 import umc.member.exception.code.MemberSuccessCode;
@@ -21,13 +23,13 @@ public class MemberController {
     private final MemberService memberService;
     private final MissionService missionService;
 
-    @PostMapping("/v1/users/me")
+    @GetMapping("/v2/users/me")
     @Operation(summary = "마이페이지 조회")
     public ApiResponse<MemberResDTO.GetInfo> getInfo(
-            @RequestBody MemberReqDTO.GetInfo dto
+            @AuthenticationPrincipal AuthMember member
     ){
         BaseSuccessCode code = MemberSuccessCode.OK;
-        return ApiResponse.onSuccess(code, memberService.getInfo(dto));
+        return ApiResponse.onSuccess(code, memberService.getInfo(member));
     }
 
     @GetMapping("/v1/home")

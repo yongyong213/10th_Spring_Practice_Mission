@@ -44,13 +44,10 @@ public class MemberService {
     private final JwtUtil jwtUtil;
 
     @Transactional(readOnly = true)
-    public MemberResDTO.GetInfo getInfo(MemberReqDTO.GetInfo dto) {
-        Long memberId = dto.id();
-
-        Member member =  memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
-
-        return MemberConverter.toGetInfo(member);
+    public MemberResDTO.GetInfo getInfo(
+            AuthMember member
+    ) {
+        return MemberConverter.toGetInfo(member.getMember());
     }
 
     @Transactional
