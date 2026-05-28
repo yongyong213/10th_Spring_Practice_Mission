@@ -49,4 +49,12 @@ public class MemberController {
 
         return ApiResponse.onSuccess(MemberSuccessCode.JOIN_OK, result);
     }
+
+    @PostMapping("/v1/login")
+    @Operation(summary = "로그인")
+    public ApiResponse<MemberResDTO.LoginResDTO> login(
+            @Valid @RequestBody MemberReqDTO.LoginDTO request
+    ) {
+        return ApiResponse.onSuccess(MemberSuccessCode.LOGIN_OK, memberService.login(request));
+    }
 }

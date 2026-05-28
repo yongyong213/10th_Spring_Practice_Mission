@@ -8,6 +8,8 @@ import umc.food.entity.Food;
 import umc.food.exeption.FoodException;
 import umc.food.exeption.code.FoodErrorCode;
 import umc.food.repository.FoodRepository;
+import umc.global.security.entity.AuthMember;
+import umc.global.security.util.JwtUtil;
 import umc.member.converter.MemberConverter;
 import umc.member.dto.MemberReqDTO;
 import umc.member.dto.MemberResDTO;
@@ -39,6 +41,7 @@ public class MemberService {
     private final FoodRepository foodRepository;
     private final TermRepository termRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Transactional(readOnly = true)
     public MemberResDTO.GetInfo getInfo(MemberReqDTO.GetInfo dto) {
@@ -105,5 +108,22 @@ public class MemberService {
         memberTermRepository.saveAll(memberTermList);
 
         return MemberConverter.toSignUpResultDTO(savedMember);
+    }
+
+    @Transactional
+    public MemberResDTO.LoginResDTO login(MemberReqDTO.LoginDTO request){
+        Member member = memberRepository.findByEmail(request.email())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        if(!passwordEncoder.matches(request.password(), member.getPassword())){
+            throw new MemberException(MemberErrorCode.INVALID_PASSWORD);
+        }
+
+        AuthMember authMember = new AuthMember(member);
+
+        String accessToken = jwtUtil.createAccessToken(authMember);
+        return MemberResDTO.LoginResDTO.builder()
+                .accessToken(accessToken)
+                .build();
     }
 }
